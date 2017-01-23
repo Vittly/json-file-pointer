@@ -4,11 +4,13 @@ const filePointer = require('../index');
 
 describe('getLocationOf', () => {
     afterEach(() => {
+        filePointer._jsonPathParse.restore();
         filePointer._jsonParse.restore();
     });
 
     describe('array', () => {
         beforeEach(() => {
+            sinon.stub(filePointer, '_jsonPathParse');
             sinon.stub(filePointer, '_jsonParse', () => ({
                 type: 'ArrayExpression',
                 elements: [
@@ -64,6 +66,7 @@ describe('getLocationOf', () => {
 
     describe('object', () => {
         beforeEach(() => {
+            sinon.stub(filePointer, '_jsonPathParse');
             sinon.stub(filePointer, '_jsonParse', () => ({
                 type: 'ObjectExpression',
                 properties: [
@@ -127,6 +130,20 @@ describe('getLocationOf', () => {
             assert.throws(() => {
                 filePointer.getLocationOf('test', [0]);
             });
+        });
+    });
+
+    describe('using plain path', () => {
+        beforeEach(() => {
+            sinon.stub(filePointer, '_jsonPathParse').returns([]);
+            sinon.stub(filePointer, '_jsonParse').returns({ loc: { start: '@test' } });
+        });
+
+        it('should parse path string', () => {
+            filePointer.getLocationOf('json', 'string.path[0]');
+
+            assert(filePointer._jsonPathParse.called);
+            assert(filePointer._jsonPathParse.calledWith('string.path[0]'));
         });
     });
 });

@@ -18,6 +18,7 @@ const jsonExample = require('fs').readFileSync('simple.deps.js');
 
 console.log(
     jsonPointer.getLocationOf(jsonExample, ['shouldDeps', 1, 'elem', 0])
+    // or: getLocationOf(jsonExample, 'shouldDeps[1].elem[0]')
 );
 
 // { line: 4, column: 33 }
