@@ -24,4 +24,4 @@ console.log(
 // { line: 4, column: 33 }
 ```
 
-Also works with `module.exports = { ... }` form.
+Also works with `module.exports` and `exports` form.
