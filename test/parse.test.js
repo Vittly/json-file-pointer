@@ -9,8 +9,12 @@ describe('jsonParse', () => {
     }
 
     function stubExpression(items) {
-        sinon.stub(acorn, 'parse', () => ({ body: [].concat(items) }));
+        acorn.parse.returns({ body: [].concat(items) });
     }
+
+    beforeEach(() => {
+        sinon.stub(acorn, 'parse');
+    });
 
     afterEach(() => {
         acorn.parse.restore();
@@ -140,6 +144,12 @@ describe('jsonParse', () => {
                 loc: smallestLocation()
             }
         });
+
+        assert.isUndefined(jsonParse());
+    });
+
+    it('should undefined in case of syntax error', () => {
+        acorn.parse.throws();
 
         assert.isUndefined(jsonParse());
     });
