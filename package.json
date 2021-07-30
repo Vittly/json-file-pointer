@@ -1,6 +1,6 @@
 {
   "name": "json-file-pointer",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Returns line/column location of path on json",
   "main": "index.js",
   "scripts": {
@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/Vittly/json-file-pointer#readme",
   "dependencies": {
-    "acorn": "^4.0.3"
+    "acorn": "^8.4.1",
   },
   "devDependencies": {
     "chai": "^3.5.0",
